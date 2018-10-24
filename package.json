@@ -1,5 +1,5 @@
 {
-  "name": "module-13",
+  "name": "findpic",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,6 @@
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
-  "author": "Alexander Yatsenko",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.0",
