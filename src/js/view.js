@@ -7,7 +7,7 @@ export default class View {
 		this.refs.form = document.querySelector('.form');
 		this.refs.input = document.querySelector('.input-js');
 		this.refs.loader = document.querySelector('.loader-overlay');
-		this.refs.loadMoreBtn = document.querySelector('.load-more');
+		this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
 		this.refs.backdrop = document.querySelector('.backdrop');
 		this.refs.modalPage = document.querySelector('.page-modal');
 		this.refs.closeModalBtn = document.querySelector('button[data-action="close-modal"]')

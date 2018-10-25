@@ -30,27 +30,27 @@
 		<!-- SEARCH FORM -->
 
 		<form class="form">
-			<input type="text" class="input-source input-js" placeholder="Введите название картинки" autofocus>
+			<input class="form__input input-js" type="text"  placeholder="Введите название картинки" autofocus>
 			<!--input-->
-			<button type="submit" class="btn">Поиск</button>
+			<button  class="form__btn" type="submit">Поиск</button>
 		</form>
 
 		<!-- IMAGE GRID -->
 		<main class="main">
 			<div class="grid"></div>
-			<button class="load-more button">Показать еще</button>
+			<button class="grid__load-more button">Показать еще</button>
 		</main>
 
 		<!--modal-->
 		<div class="backdrop">
 			<div class="page-modal">
 				<img src="../src/img/1.jpg" alt="enlarged foto" width="700px">
-				<div class="actions">
-					<div class="modal-icons">
+				<div class="page-modal__actions">
+					<div class="page-modal__icons">
 						<button class="button" data-next="next">&#60;</button>
 						<button class="button" data-prev="prev">&#62;</button>
 						<button class="button" data-favorite="favorite">&#9733;</button>
-						<button class="button closeModalBtn" data-action="close-modal">&times;</button>
+						<button class="button" data-action="close-modal">&times;</button>
 					</div>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 
 		<div class="loader-overlay">
 			<div class="loader">
-				<svg class="circular" viewbox="25 25 50 50">
+				<svg class="loader__circular" viewbox="25 25 50 50">
 					<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
 				</svg>
 			</div>
