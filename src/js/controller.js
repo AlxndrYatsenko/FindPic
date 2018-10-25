@@ -21,17 +21,18 @@ export default class Controller {
 	}
 
 	// modal
-	handleOpenModal() {
+	handleOpenModal(evt) {
+		const imgUrl = evt.target.getAttribute("src")
+		this._view.refs.modalImg.setAttribute("src", imgUrl)
+
 		this._view.refs.backdrop.classList.add('show-modal');
 		this._view.refs.backdrop.style.display = "flex"
 		window.addEventListener('keydown', this.handleModalEscPress.bind(this));
 	}
 
 	handleModalEscPress(evt) {
-		// console.log(this)
 		const key = evt.code;
 		if (key === "Escape") {
-			// console.log(this)
 			this.handleCloseModal();
 		}
 	}
