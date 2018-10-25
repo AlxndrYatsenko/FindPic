@@ -10,6 +10,7 @@ export default class View {
 		this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
 		this.refs.backdrop = document.querySelector('.backdrop');
 		this.refs.modalPage = document.querySelector('.page-modal');
+		this.refs.modalImg = document.querySelector('.page-modal__img');
 		this.refs.closeModalBtn = document.querySelector('button[data-action="close-modal"]')
 	}
 
