@@ -1,0 +1,51 @@
+.page-modal.show-modal .backdrop {
+	display: flex;
+}
+
+.page-modal {
+	padding: 16px;
+	border-radius: 2px;
+
+	&__actions {
+		display: flex;
+		margin: 0 auto;
+		justify-content: center;
+
+		& button {
+			padding: 0;
+			border: none;
+			font-size: 16px;
+			color: #fff;
+			background-color: #6734ba;
+			cursor: pointer;
+			font-weight: 700;
+
+			&:hover {
+				color: #eeed11;
+			}
+		}
+	}
+
+	&__icons {
+		width: 167px;
+		padding: 10px 20px;
+		justify-content: space-around;
+		display: flex;
+		background-color: #672cbd;
+		border-radius: 22px;
+		margin-top: 14px;
+	}
+}
+
+.backdrop {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.4);
+}
