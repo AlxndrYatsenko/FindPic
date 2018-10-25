@@ -12,33 +12,34 @@ export default class Controller {
 
 		this._view.refs.loadMoreBtn.addEventListener('click',
 			this.handleLoadMoreClick.bind(this));
-			
-		this._view.refs.grid.addEventListener('click',
-		this.handleOpenModal.bind(this));
 
-	this._view.refs.closeModalBtn.addEventListener('click',
-		this.handleCloseModal.bind(this));
+		this._view.refs.grid.addEventListener('click',
+			this.handleOpenModal.bind(this));
+
+		this._view.refs.closeModalBtn.addEventListener('click',
+			this.handleCloseModal.bind(this));
 	}
 
 	// modal
 	handleOpenModal() {
-		this._view.refs.modalPage.classList.add('show-modal');
-		this._view.refs.backdrop.style.display="flex"
-		window.addEventListener('keydown', this.handleModalEscPress);
-	}
-
-
-	handleCloseModal() {
-		this._view.refs.modalPage.classList.remove('show-modal');
-		this._view.refs.backdrop.style.display="none"
-		window.removeEventListener('keydown', this.handleModalEscPress);
+		this._view.refs.backdrop.classList.add('show-modal');
+		this._view.refs.backdrop.style.display = "flex"
+		window.addEventListener('keydown', this.handleModalEscPress.bind(this));
 	}
 
 	handleModalEscPress(evt) {
+		// console.log(this)
 		const key = evt.code;
 		if (key === "Escape") {
-			handleCloseModal();
+			// console.log(this)
+			this.handleCloseModal();
 		}
+	}
+
+	handleCloseModal() {
+		this._view.refs.backdrop.classList.remove('show-modal');
+		this._view.refs.backdrop.style.display = "none"
+		window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
 	}
 
 	// submit
