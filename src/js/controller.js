@@ -1,5 +1,5 @@
 import {
-    getImages
+	getImages
 } from './services/api';
 
 export default class Controller {
@@ -17,9 +17,9 @@ export default class Controller {
 
 		this._view.refs.grid.addEventListener('click',
 			this.handleOpenModal.bind(this));
-    
-    this._view.refs.modalPage.addEventListener('click',
-            this.handleModalControls.bind(this));
+
+		this._view.refs.modalPage.addEventListener('click',
+			this.handleModalControls.bind(this));
 
 		this._view.refs.closeModalBtn.addEventListener('click',
 			this.handleCloseModal.bind(this));
@@ -39,7 +39,7 @@ export default class Controller {
 
 
 	//favorite
-	handleShowFavorite(){
+	handleShowFavorite() {
 
 		this._view.refs.grid.textContent = '';
 		const markup = this._view.createGridItems(this.images);
@@ -52,20 +52,20 @@ export default class Controller {
 		const parrent = evt.target.closest(".page-modal")
 		const img = parrent.querySelector(".page-modal__img")
 		const imgUrl = img.getAttribute("src")
-		if(this._model.isHasUrl(imgUrl, this.images)) return
+		if (this._model.isHasUrl(imgUrl, this.images)) return
 		const obj = {
 			webformatURL: imgUrl
 		}
 		this.images.push(obj)
-		console.log(this.images)
 		this._model.addToLocalStorage(this.images)
 	}
 
 	handleOpenModal(evt) {
+		this._model.backdropImageInit(evt.target)
+
 		const imgUrl = evt.target.getAttribute("src")
 
-		if(this._model.isHasUrl(imgUrl, this.images)){
-			console.log('qqqqqqqqqqqqq')
+		if (this._model.isHasUrl(imgUrl, this.images)) {
 			this._view.refs.favoriteModalBtn.style.color = "red"
 		}
 
@@ -73,9 +73,6 @@ export default class Controller {
 		this._view.refs.backdrop.classList.add('show-modal');
 		this._view.refs.backdrop.style.display = "flex"
 		window.addEventListener('keydown', this.handleModalEscPress.bind(this));
-		
-		
-		// const isHas = 
 	}
 
 	handleModalEscPress(evt) {
@@ -91,36 +88,37 @@ export default class Controller {
 		window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
 	}
 
-//controll
-handleModalControls() {
+	//controll
+	handleModalControls() {
 
-        const target = event.target;
+		const target = event.target;
 
-        if (target.nodeName !== "BUTTON") return;
+		if (target.nodeName !== "BUTTON") return;
 
-        const action = target.dataset.action;
+		const action = target.dataset.action;
 
-        switch (action) {
-            case 'next':
-                this._view.refs.modalImg.src = this._model.backdropShowNextImage();
-                break;
+		switch (action) {
+			case 'next':
+				this._view.refs.modalImg.src = this._model.backdropShowNextImage();
 
-            case 'prev':
-                this._view.refs.modalImg.src = this._model.backdropShowPrevImage();
-                break;
+				break;
 
-            case 'favorite':
+			case 'prev':
+				this._view.refs.modalImg.src = this._model.backdropShowPrevImage();
+				break;
 
-                break;
+			case 'favorite':
 
-            case 'close-modal':
-                this._view.refs.backdrop.classList.remove('show-modal');
-                this._view.refs.backdrop.style.display = "none"
-                window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
-                this._model.backdropCloseModal();
-                break;
-        }
-    }
+				break;
+
+			case 'close-modal':
+				this._view.refs.backdrop.classList.remove('show-modal');
+				this._view.refs.backdrop.style.display = "none"
+				window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
+				this._model.backdropCloseModal();
+				break;
+		}
+	}
 
 	// submit
 	handleFormSumit(e) {
