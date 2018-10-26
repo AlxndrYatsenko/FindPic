@@ -4,55 +4,95 @@ import {
 
 export default class Controller {
 
-    constructor(model, view) {
-        this._model = model;
-        this._view = view;
+	constructor(model, view) {
+		this._model = model;
+		this._view = view;
+		this.images = this._model.localImages;
 
-        this._view.refs.form.addEventListener('submit',
-            this.handleFormSumit.bind(this));
+		this._view.refs.form.addEventListener('submit',
+			this.handleFormSumit.bind(this));
 
-        this._view.refs.loadMoreBtn.addEventListener('click',
-            this.handleLoadMoreClick.bind(this));
+		this._view.refs.loadMoreBtn.addEventListener('click',
+			this.handleLoadMoreClick.bind(this));
 
-        this._view.refs.grid.addEventListener('click',
-            this.handleOpenModal.bind(this));
-        this._view.refs.modalPage.addEventListener('click',
+		this._view.refs.grid.addEventListener('click',
+			this.handleOpenModal.bind(this));
+    
+    this._view.refs.modalPage.addEventListener('click',
             this.handleModalControls.bind(this));
 
-        // this._view.refs.closeModalBtn.addEventListener('click',
-        // this.handleCloseModal.bind(this));
-    }
+		this._view.refs.closeModalBtn.addEventListener('click',
+			this.handleCloseModal.bind(this));
 
-    // modal
-    handleOpenModal() {
-        const target = event.target;
-        if (target.nodeName !== "IMG") return;
+		this._view.refs.favoriteModalBtn.addEventListener('click',
+			this.handleFavoriteBtn.bind(this));
 
-        this._view.refs.backdrop.classList.add('show-modal');
-        this._view.refs.backdrop.style.display = "flex";
+		this._view.refs.showFavorite.addEventListener('click',
+			this.handleShowFavorite.bind(this));
 
-        this._view.refs.modalImg.src = this._model.backdropImageInit(target);
+		this.init();
+	}
+
+	init() {
+		this._model.addToLocalStorage(this.images)
+	}
 
 
-        window.addEventListener('keydown', this.handleModalEscPress.bind(this));
-    }
+	//favorite
+	handleShowFavorite(){
 
-    handleModalEscPress(evt) {
-        // console.log(this)
-        const key = evt.code;
-        if (key === "Escape") {
-            // console.log(this)
-            this.handleCloseModal();
-        }
-    }
+		this._view.refs.grid.textContent = '';
+		const markup = this._view.createGridItems(this.images);
+		this._view.updatePhotosGrid(markup);
+	}
 
-    handleCloseModal() {
-        this._view.refs.backdrop.classList.remove('show-modal');
-        this._view.refs.backdrop.style.display = "none"
-        window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
-    }
+	// modal
+	handleFavoriteBtn(evt) {
 
-    handleModalControls() {
+		const parrent = evt.target.closest(".page-modal")
+		const img = parrent.querySelector(".page-modal__img")
+		const imgUrl = img.getAttribute("src")
+		if(this._model.isHasUrl(imgUrl, this.images)) return
+		const obj = {
+			webformatURL: imgUrl
+		}
+		this.images.push(obj)
+		console.log(this.images)
+		this._model.addToLocalStorage(this.images)
+	}
+
+	handleOpenModal(evt) {
+		const imgUrl = evt.target.getAttribute("src")
+
+		if(this._model.isHasUrl(imgUrl, this.images)){
+			console.log('qqqqqqqqqqqqq')
+			this._view.refs.favoriteModalBtn.style.color = "red"
+		}
+
+		this._view.refs.modalImg.setAttribute("src", imgUrl)
+		this._view.refs.backdrop.classList.add('show-modal');
+		this._view.refs.backdrop.style.display = "flex"
+		window.addEventListener('keydown', this.handleModalEscPress.bind(this));
+		
+		
+		// const isHas = 
+	}
+
+	handleModalEscPress(evt) {
+		const key = evt.code;
+		if (key === "Escape") {
+			this.handleCloseModal();
+		}
+	}
+
+	handleCloseModal() {
+		this._view.refs.backdrop.classList.remove('show-modal');
+		this._view.refs.backdrop.style.display = "none"
+		window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
+	}
+
+//controll
+handleModalControls() {
 
         const target = event.target;
 
@@ -82,38 +122,38 @@ export default class Controller {
         }
     }
 
-    // submit
-    handleFormSumit(e) {
-        e.preventDefault();
+	// submit
+	handleFormSumit(e) {
+		e.preventDefault();
 
-        this._model.resetCurrentPage();
-        this._view.resetPhotosGrid();
-        this._model.currentQuery = this._view.refs.input.value;
-        this.handleFetch({
-            query: this._model.currentQuery,
-            page: this._model.currentPage,
-        });
+		this._model.resetCurrentPage();
+		this._view.resetPhotosGrid();
+		this._model.currentQuery = this._view.refs.input.value;
+		this.handleFetch({
+			query: this._model.currentQuery,
+			page: this._model.currentPage,
+		});
 
-        this._view.refs.form.reset();
-        this._view.showLoadMoreBtn();
-    }
+		this._view.refs.form.reset();
+		this._view.showLoadMoreBtn();
+	}
 
-    handleFetch(params) {
-        this._view.toggleLoader();
+	handleFetch(params) {
+		this._view.toggleLoader();
 
-        getImages(params).then(photos => {
-            const markup = this._view.createGridItems(photos);
-            this._view.updatePhotosGrid(markup);
-            this._view.toggleLoader();
-        });
-    }
+		getImages(params).then(photos => {
+			const markup = this._view.createGridItems(photos);
+			this._view.updatePhotosGrid(markup);
+			this._view.toggleLoader();
+		});
+	}
 
-    handleLoadMoreClick() {
-        this._model.incrementCurrentPage();
-        this.handleFetch({
-            query: this._model.currentQuery,
-            page: this._model.currentPage,
-        });
-    }
+	handleLoadMoreClick() {
+		this._model.incrementCurrentPage();
+		this.handleFetch({
+			query: this._model.currentQuery,
+			page: this._model.currentPage,
+		});
+	}
 
 }
