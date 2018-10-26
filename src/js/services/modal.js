@@ -2,8 +2,6 @@ const backdrop = {
     currentImage: document.querySelector('.page-modal img'),
     nextImage: "",
     prevImage: "",
-    nextImageIndex: "",
-    prevImageIndex: "",
     currentImgIndex: 0,
 
     getNextImage() {
