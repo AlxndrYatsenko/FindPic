@@ -3,6 +3,7 @@ import {
 } from './services/api';
 
 export default class Controller {
+
     constructor(model, view) {
         this._model = model;
         this._view = view;
@@ -114,4 +115,5 @@ export default class Controller {
             page: this._model.currentPage,
         });
     }
+
 }

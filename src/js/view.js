@@ -1,6 +1,7 @@
 import gridItemTpl from '../templates/gallery-template.hbs';
 
 export default class View {
+
     constructor() {
         this.refs = {};
         this.refs.grid = document.querySelector('.grid');
@@ -13,6 +14,7 @@ export default class View {
         this.refs.modalImg = document.querySelector('.page-modal img');
         // this.refs.closeModalBtn = document.querySelector('button[data-action="close-modal"]')
     }
+
 
     showLoadMoreBtn() {
         if (!this.refs.loadMoreBtn.classList.contains('visible')) {
