@@ -1,6 +1,7 @@
 import gridItemTpl from '../templates/gallery-template.hbs';
 
 export default class View {
+
 	constructor() {
 		this.refs = {};
 
@@ -43,4 +44,5 @@ export default class View {
 	// 	const markup = this.createGridItems(arr);
 	// 	this.updatePhotosGrid(markup);
 	// }
+
 }

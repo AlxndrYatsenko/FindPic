@@ -1,8 +1,9 @@
 import {
-	getImages
+    getImages
 } from './services/api';
 
 export default class Controller {
+
 	constructor(model, view) {
 		this._model = model;
 		this._view = view;
@@ -16,6 +17,9 @@ export default class Controller {
 
 		this._view.refs.grid.addEventListener('click',
 			this.handleOpenModal.bind(this));
+    
+    this._view.refs.modalPage.addEventListener('click',
+            this.handleModalControls.bind(this));
 
 		this._view.refs.closeModalBtn.addEventListener('click',
 			this.handleCloseModal.bind(this));
@@ -87,6 +91,37 @@ export default class Controller {
 		window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
 	}
 
+//controll
+handleModalControls() {
+
+        const target = event.target;
+
+        if (target.nodeName !== "BUTTON") return;
+
+        const action = target.dataset.action;
+
+        switch (action) {
+            case 'next':
+                this._view.refs.modalImg.src = this._model.backdropShowNextImage();
+                break;
+
+            case 'prev':
+                this._view.refs.modalImg.src = this._model.backdropShowPrevImage();
+                break;
+
+            case 'favorite':
+
+                break;
+
+            case 'close-modal':
+                this._view.refs.backdrop.classList.remove('show-modal');
+                this._view.refs.backdrop.style.display = "none"
+                window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
+                this._model.backdropCloseModal();
+                break;
+        }
+    }
+
 	// submit
 	handleFormSumit(e) {
 		e.preventDefault();
@@ -120,4 +155,5 @@ export default class Controller {
 			page: this._model.currentPage,
 		});
 	}
+
 }

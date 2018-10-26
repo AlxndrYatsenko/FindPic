@@ -1,4 +1,7 @@
+import * as modal from './services/modal'
+
 export default class Model {
+
 	constructor() {
 		this.currentQuery = '';
 		this.currentPage = 1;
@@ -26,4 +29,18 @@ export default class Model {
 	isHasUrl(url, arr) {
     return arr.some(obj => obj.webformatURL === url);
   }
+
+backdropImageInit(selectedImage) {
+        return modal.showCurrentImage(selectedImage);
+    }
+    backdropShowNextImage() {
+        return modal.showNextImage();
+    }
+    backdropShowPrevImage() {
+        return modal.showPrevImage();
+    }
+    backdropCloseModal() {
+        return modal.closeModal();
+    }
+
 }
