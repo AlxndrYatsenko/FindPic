@@ -1,38 +1,40 @@
 import gridItemTpl from '../templates/gallery-template.hbs';
 
 export default class View {
-	constructor() {
-		this.refs = {};
-		this.refs.grid = document.querySelector('.grid');
-		this.refs.form = document.querySelector('.form');
-		this.refs.input = document.querySelector('.input-js');
-		this.refs.loader = document.querySelector('.loader-overlay');
-		this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
-		this.refs.backdrop = document.querySelector('.backdrop');
-		this.refs.modalPage = document.querySelector('.page-modal');
-		this.refs.modalImg = document.querySelector('.page-modal__img');
-		this.refs.closeModalBtn = document.querySelector('button[data-action="close-modal"]')
-	}
 
-	showLoadMoreBtn() {
-		if (!this.refs.loadMoreBtn.classList.contains('visible')) {
-			this.refs.loadMoreBtn.classList.add('visible');
-		}
-	}
+    constructor() {
+        this.refs = {};
+        this.refs.grid = document.querySelector('.grid');
+        this.refs.form = document.querySelector('.form');
+        this.refs.input = document.querySelector('.input-js');
+        this.refs.loader = document.querySelector('.loader-overlay');
+        this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
+        this.refs.backdrop = document.querySelector('.backdrop');
+        this.refs.modalPage = document.querySelector('.page-modal');
+        this.refs.modalImg = document.querySelector('.page-modal img');
+        // this.refs.closeModalBtn = document.querySelector('button[data-action="close-modal"]')
+    }
 
-	createGridItems(items) {
-		return items.reduce((markup, item) => markup + gridItemTpl(item), '');
-	}
 
-	updatePhotosGrid(markup) {
-		this.refs.grid.insertAdjacentHTML('beforeend', markup);
-	}
+    showLoadMoreBtn() {
+        if (!this.refs.loadMoreBtn.classList.contains('visible')) {
+            this.refs.loadMoreBtn.classList.add('visible');
+        }
+    }
 
-	resetPhotosGrid() {
-		this.refs.grid.innerHTML = '';
-	}
+    createGridItems(items) {
+        return items.reduce((markup, item) => markup + gridItemTpl(item), '');
+    }
 
-	toggleLoader() {
-		return this.refs.loader.classList.toggle('show-loader');
-	}
+    updatePhotosGrid(markup) {
+        this.refs.grid.insertAdjacentHTML('beforeend', markup);
+    }
+
+    resetPhotosGrid() {
+        this.refs.grid.innerHTML = '';
+    }
+
+    toggleLoader() {
+        return this.refs.loader.classList.toggle('show-loader');
+    }
 }
