@@ -2,73 +2,72 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Team Project</title>
-	<link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
-<link href="styles.css?ede0b255c49e17c5fb75" rel="stylesheet"></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Team Project</title>
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+<link href="styles.css?7417d3321fa3334fdc61" rel="stylesheet"></head>
 
 <body class="page">
 
 	<header class="header">
 		<!--favorites-->
 		<div class="favorites">
-			<a href="#">Избранные</a>
+			<a class="favorites__link" href="#">Избранные</a>
 		</div>
 	</header>
 	<main class="main">
 
-		<!--logo-->
-		<picture>
-			<source media="(max-width: 479px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
-			<source media="(min-width: 480px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
-			<source media="(min-width: 768px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
-			<img src="../src/img/logo.png" alt="Logo for source picture">
-		</picture>
 
-		<!-- SEARCH FORM -->
+        <!--logo-->
+        <picture>
+            <source media="(max-width: 479px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
+            <source media="(min-width: 480px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
+            <source media="(min-width: 768px)" srcset="../src/img/logo.png 1x,../src/img/logo@2x.png 2x">
+            <img src="../src/img/logo.png" alt="Logo for source picture">
+        </picture>
 
-		<form class="form">
-			<input class="form__input input-js" type="text"  placeholder="Введите название картинки" autofocus>
-			<!--input-->
-			<button  class="form__btn" type="submit">Поиск</button>
-		</form>
+        <!-- SEARCH FORM -->
 
-		<!-- IMAGE GRID -->
-		<main class="main">
-			<div class="grid"></div>
-			<button class="grid__load-more button">Показать еще</button>
-		</main>
-
-		<!--modal-->
-		<div class="backdrop">
-			<div class="page-modal">
-				<img src="../src/img/1.jpg" alt="enlarged foto" width="700px">
-				<div class="page-modal__actions">
-					<div class="page-modal__icons">
-						<button class="button" data-next="next">&#60;</button>
-						<button class="button" data-prev="prev">&#62;</button>
-						<button class="button" data-favorite="favorite">&#9733;</button>
-						<button class="button" data-action="close-modal">&times;</button>
-					</div>
-				</div>
-			</div>
-		</div>
+        <form class="form">
+            <input class="form__input input-js" type="text" placeholder="Введите название картинки" autofocus>
+            <!--input-->
+            <button class="form__btn" type="submit">Поиск</button>
+        </form>
 
 
-		<!-- LOADER -->
+        <!-- IMAGE GRID -->
+            <ul class="grid"></ul>
+            <button class="grid__load-more button">Показать еще</button>
 
-		<div class="loader-overlay">
-			<div class="loader">
-				<svg class="loader__circular" viewbox="25 25 50 50">
+        <!--modal-->
+        <div class="backdrop">
+            <div class="page-modal">
+                <img class="page-modal__img"  alt="enlarged foto" height="800PX" width="auto">
+                <div class="page-modal__actions">
+                    <div class="page-modal__icons">
+                        <button class="button" data-action="prev">&#60;</button>
+                        <button class="button" data-action="next">&#62;</button>
+                        <button class="button" data-action="favorite">&#9733;</button>
+                        <button class="button" data-action="close-modal">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOADER -->
+
+        <div class="loader-overlay">
+            <div class="loader">
+                <svg class="loader__circular" viewbox="25 25 50 50">
 					<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
 				</svg>
-			</div>
-		</div>
+            </div>
+        </div>
 
-	</main>
+    </main>
 
-<script type="text/javascript" src="bundle.js?ede0b255c49e17c5fb75"></script></body>
+<script type="text/javascript" src="bundle.js?7417d3321fa3334fdc61"></script></body>
 
 </html>
