@@ -8,7 +8,7 @@ export default class View {
 		this.refs.grid = document.querySelector('.grid');
 		this.refs.form = document.querySelector('.form');
 		this.refs.input = document.querySelector('.input-js');
-		this.refs.loader = document.querySelector('.loader-overlay');
+		this.refs.loader = document.querySelector('.page');
 		this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
 		this.refs.backdrop = document.querySelector('.backdrop');
 		this.refs.modalPage = document.querySelector('.page-modal');
