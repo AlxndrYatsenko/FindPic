@@ -13,7 +13,7 @@ export default class View {
 		this.refs.backdrop = document.querySelector('.backdrop');
 		this.refs.modalPage = document.querySelector('.page-modal');
 		this.refs.modalImg = document.querySelector('.page-modal__img');
-		this.refs.modalActions = document.querySelector('.page-modal__actions')
+		this.refs.modalIcons = document.querySelector('.page-modal__icons')
 		this.refs.favoriteModalBtn = document.querySelector('button[data-action="favorite"]')
 		this.refs.showFavorite = document.querySelector('.favorites__link')
 	}
