@@ -73,7 +73,7 @@ export default class Controller {
 	//MODAL
 
 	handleOpenModal(evt) {
-		if(evt.target.nodeName !== 'IMG')return
+		
 		this._model.backdropImageInit(evt.target)
 		this.changeColorFavorite(evt.target)
 		this._view.changeDisplayElem(this._view.refs.backdrop, "flex")
@@ -83,9 +83,8 @@ export default class Controller {
 	}
 
 	handleModalClick({target}){
-		if(target.nodeName !== 'IMG'){
+		if(evt.target.nodeName !== 'IMG' || target === this._view.refs.modalActions)return
 			this.handleCloseModal()
-		}
 	}
 
 	handleModalKeyPress(evt) {
