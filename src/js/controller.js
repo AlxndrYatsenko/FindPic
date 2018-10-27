@@ -82,9 +82,12 @@ export default class Controller {
 		window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
 	}
 
-	handleModalClick({target}){
-		if(evt.target.nodeName !== 'IMG' || target === this._view.refs.modalActions)return
+	handleModalClick(evt){
+		if(evt.target.nodeName !== 'IMG'
+		&& evt.target.nodeName !== 'BUTTON'
+		&& evt.target !== this._view.refs.modalIcons){
 			this.handleCloseModal()
+		}
 	}
 
 	handleModalKeyPress(evt) {
