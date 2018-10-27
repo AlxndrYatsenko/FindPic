@@ -76,6 +76,7 @@ export default class Controller {
 	//MODAL
 
 	handleOpenModal(evt) {
+		if(evt.target.nodeName !== 'IMG')return
 		this._model.backdropImageInit(evt.target)
 		this.changeColorFavorite(evt.target)
 		this._view.changeDisplayElem(this._view.refs.backdrop, "flex")
