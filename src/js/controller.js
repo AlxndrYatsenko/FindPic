@@ -22,9 +22,6 @@ export default class Controller {
 		this._view.refs.modalPage.addEventListener('click',
 			this.handleModalControls.bind(this));
 
-		this._view.refs.closeModalBtn.addEventListener('click',
-			this.handleCloseModal.bind(this));
-
 		this._view.refs.showFavorite.addEventListener('click',
 			this.handleShowFavorite.bind(this));
 
@@ -76,23 +73,40 @@ export default class Controller {
 	//MODAL
 
 	handleOpenModal(evt) {
+		if(evt.target.nodeName !== 'IMG')return
 		this._model.backdropImageInit(evt.target)
 		this.changeColorFavorite(evt.target)
 		this._view.changeDisplayElem(this._view.refs.backdrop, "flex")
-		window.addEventListener('keydown', this.handleModalEscPress.bind(this));
+		window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
 	}
 
-	handleModalEscPress(evt) {
+	handleModalKeyPress(evt) {
 		const key = evt.code;
-		if (key === "Escape") {
-			this.handleCloseModal();
+		switch (key) {
+			case 'Escape':
+				this.handleCloseModal();
+				break;
+
+			case 'ArrowLeft':
+			this.keyPrev()
+				break;
+
+			case 'ArrowRight':
+			this.keyNext()
+				break;
 		}
 	}
+
+
+
+
+
+
 
 	handleCloseModal() {
 		this._view.refs.backdrop.classList.remove('show-modal');
 		this._view.changeDisplayElem(this._view.refs.backdrop, "none")
-		window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
+		window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
 	}
 
 	//FAVORITE
@@ -118,17 +132,11 @@ export default class Controller {
 
 		switch (action) {
 			case 'next':
-				const nextImg = this._model.backdropShowNextImage()
-				this._view.refs.modalImg.src = nextImg.src
-				this._view.refs.modalImg.id = nextImg.id
-				this.changeColorFavorite(nextImg)
+			this.keyNext()
 				break;
 
 			case 'prev':
-				const prevImg = this._model.backdropShowPrevImage();
-				this._view.refs.modalImg.src = prevImg.src
-				this._view.refs.modalImg.id = prevImg.id
-				this.changeColorFavorite(prevImg)
+			this.keyPrev()
 				break;
 
 			case 'favorite':
@@ -136,10 +144,7 @@ export default class Controller {
 				const imgId = this._view.refs.modalImg.getAttribute("id")
 
 				if (this._model.isHasId(imgId, this.images)) {
-					this.images = this.images.filter(obj => obj.id !== imgId)
-					this._model.addToLocalStorage(this.images)
-
-					this._view.changeColorFavoriteBtn("#ffffff")
+					this.addToFavorite(imgId, this.images)
 					return
 				}
 
@@ -157,7 +162,7 @@ export default class Controller {
 			case 'close-modal':
 				this._view.refs.backdrop.classList.remove('show-modal');
 				this._view.refs.backdrop.style.display = "none"
-				window.removeEventListener('keydown', this.handleModalEscPress.bind(this));
+				window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
 				this._model.backdropCloseModal();
 				break;
 		}
@@ -173,5 +178,26 @@ export default class Controller {
 		this._model.isHasId(imgId, this.images) ?
 			this._view.changeColorFavoriteBtn("#eeed11") :
 			this._view.changeColorFavoriteBtn("#ffffff")
+	}
+
+	keyPrev(){
+		const prevImg = this._model.backdropShowPrevImage();
+		this._view.refs.modalImg.src = prevImg.src
+		this._view.refs.modalImg.id = prevImg.id
+		this.changeColorFavorite(prevImg)
+	}
+
+	keyNext(){
+		const nextImg = this._model.backdropShowNextImage()
+				this._view.refs.modalImg.src = nextImg.src
+				this._view.refs.modalImg.id = nextImg.id
+				this.changeColorFavorite(nextImg)
+	}
+
+	addToFavorite(id, arr){
+		arr = arr.filter(obj => obj.id !== id)
+		this._model.addToLocalStorage(arr)
+
+		this._view.changeColorFavoriteBtn("#ffffff")
 	}
 }
