@@ -97,12 +97,6 @@ export default class Controller {
 		}
 	}
 
-
-
-
-
-
-
 	handleCloseModal() {
 		this._view.refs.backdrop.classList.remove('show-modal');
 		this._view.changeDisplayElem(this._view.refs.backdrop, "none")
@@ -122,6 +116,7 @@ export default class Controller {
 	}
 
 	//CONTROLL
+	
 	handleModalControls() {
 
 		const target = event.target;
@@ -140,23 +135,26 @@ export default class Controller {
 				break;
 
 			case 'favorite':
-				const imgUrl = this._view.refs.modalImg.getAttribute("src")
-				const imgId = this._view.refs.modalImg.getAttribute("id")
+			const imgUrl = this._view.refs.modalImg.getAttribute("src")
+			const imgId = this._view.refs.modalImg.getAttribute("id")
 
-				if (this._model.isHasId(imgId, this.images)) {
-					this.addToFavorite(imgId, this.images)
-					return
-				}
-
-				this._view.changeColorFavoriteBtn("#eeed11")
-				
-				const obj = {
-					id: imgId,
-					webformatURL: imgUrl,
-				}
-
-				this.images.push(obj)
+			if (this._model.isHasId(imgId, this.images)) {
+				this.images = this.images.filter(obj => obj.id !== imgId)
 				this._model.addToLocalStorage(this.images)
+
+				this._view.changeColorFavoriteBtn("#ffffff")
+				return
+			}
+
+			this._view.changeColorFavoriteBtn("#eeed11")
+			
+			const obj = {
+				id: imgId,
+				webformatURL: imgUrl,
+			}
+
+			this.images.push(obj)
+			this._model.addToLocalStorage(this.images)
 				break;
 
 			case 'close-modal':
@@ -192,12 +190,5 @@ export default class Controller {
 				this._view.refs.modalImg.src = nextImg.src
 				this._view.refs.modalImg.id = nextImg.id
 				this.changeColorFavorite(nextImg)
-	}
-
-	addToFavorite(id, arr){
-		arr = arr.filter(obj => obj.id !== id)
-		this._model.addToLocalStorage(arr)
-
-		this._view.changeColorFavoriteBtn("#ffffff")
 	}
 }
