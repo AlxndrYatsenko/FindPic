@@ -1,3 +1,4 @@
+export const imagesOnThePage = []
 const backdrop = {
 	currentImage: document.querySelector('.page-modal img'),
 	nextImage: "",
@@ -5,31 +6,23 @@ const backdrop = {
 	currentImgIndex: 0,
 
 	getNextImage() {
-			if (backdrop.currentImgIndex === imagesOnThePage.length - 1) return;
-
-
-			backdrop.currentImgIndex += 1;
-			return backdrop.nextImage = imagesOnThePage[backdrop.currentImgIndex];
+		if (backdrop.currentImgIndex === imagesOnThePage.length - 1) return;
+		backdrop.currentImgIndex += 1;
+		return backdrop.nextImage = imagesOnThePage[backdrop.currentImgIndex];
 	},
 	getPrevImage() {
-			if (backdrop.currentImgIndex === 0) return;
-			backdrop.currentImgIndex -= 1;
-			return backdrop.prevImage = imagesOnThePage[backdrop.currentImgIndex];
+		if (backdrop.currentImgIndex === 0) return;
+		backdrop.currentImgIndex -= 1;
+		return backdrop.prevImage = imagesOnThePage[backdrop.currentImgIndex];
 	}
 }
 
-const imagesOnThePage = [];
-
-
 export const showCurrentImage = (target) => {
 	imagesOnThePage.length = 0;
+	const allImg = document.querySelectorAll('.grid__item img')
+	allImg.forEach(img => {	imagesOnThePage.push(img)	});
 
-	backdrop.currentImage = target.src;
-	console.log(target.src)
-	document.querySelectorAll('.grid__item img').forEach(img => imagesOnThePage.push(img.src));
-
-	backdrop.currentImgIndex = imagesOnThePage.indexOf(backdrop.currentImage);
-
+	backdrop.currentImgIndex = imagesOnThePage.indexOf(target);
 	backdrop.getPrevImage();
 	backdrop.getNextImage();
 
@@ -40,18 +33,15 @@ export const showCurrentImage = (target) => {
 export const showPrevImage = () => {
 	backdrop.getPrevImage();
 	backdrop.currentImage = backdrop.prevImage;
-	return backdrop.currentImage;
+	return backdrop.currentImage
 }
 
 export const showNextImage = () => {
 	backdrop.getNextImage();
 	backdrop.currentImage = backdrop.nextImage;
-	return backdrop.currentImage;
+	return backdrop.currentImage
 }
 
-export const addToFavorites = () => {
-
-}
 export const closeModal = () => {
 	backdrop.nextImage = "";
 	backdrop.prevImage = "";
