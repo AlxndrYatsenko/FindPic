@@ -39,4 +39,12 @@ export default class View {
 	toggleLoader() {
 		return this.refs.loader.classList.toggle('show-loader');
 	}
+
+	changeColorFavoriteBtn(color) {
+		this.refs.favoriteModalBtn.style.color = color
+	}
+
+	changeDisplayElem(elem, string) {
+		elem.style.display = string
+	}
 }
