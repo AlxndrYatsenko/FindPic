@@ -148,7 +148,6 @@ export default class Controller {
         if (!this._view.refs.grid.classList.contains('js-favorites')) return;
 
         const target = event.target;
-        console.log(target)
 
         if (target.nodeName !== "BUTTON") return;
         const action = target.dataset.action;
