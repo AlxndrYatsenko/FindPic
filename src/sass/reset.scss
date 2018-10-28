@@ -1,14 +1,45 @@
 *, *::before, *::after{
   box-sizing: border-box;
 }
-body {
+.wrapper {
   margin: 0 auto;
-  width: 990px;
-  padding: 40px 0;
+  width: 320px;
+  padding: 10px 0;
+  position: relative;
 }
-img {
+.logo {
   display: block;
-  max-width: 100%;
+  width: 300px;
   height: auto;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
+.button{
+	margin: auto;
+	outline: none;
+}
+.button:hover{
+  cursor: pointer;
+  
+}
+  li{
+    list-style-type: none;
+  }
 
+//===================<<MEDIA 768>>=========================
+
+  @media(min-width: 768px) and (max-width: 1199px) {
+	.wrapper{
+    width: 760px;
+  }
+  }
+
+//===================<<MEDIA 1200>>=========================
+@media(min-width: 1200px){
+  .wrapper{
+    width: 1200px;
+  position: relative;
+  
+  }
+ 
+}
