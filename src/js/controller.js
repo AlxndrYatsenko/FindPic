@@ -138,7 +138,6 @@ export default class Controller {
             alert('Вы ничего не добавили в избранное')
         }
         this._view.refs.grid.classList.add('js-favorites');
-        this._view.refs.favoriteModalBtn.classList.add('js-favorites__icon');
         this._view.refs.loadMoreBtn.classList.remove('visible');
         this._view.refs.grid.textContent = '';
         const markup = this._view.createGridItems(this.images);
