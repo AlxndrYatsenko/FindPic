@@ -1,29 +1,27 @@
-
-
-
-.form{
+.form {
   width: 320px;
   padding: 0 10px;
-  
+
   display: block;
 
 }
 
-.form__input{
+.form__input {
   width: 300px;
   height: 33px;
   padding: 0 10px;
-  border-radius: 0.812rem;
+  border-radius: 15px;
   border: 2px solid $border-color;
   outline: none;
-  
+
   display: block;
   margin: 70px auto 40px;
 }
-.form__btn{
+
+.form__btn {
   display: block;
   margin: 0 auto;
-  border-radius: 0.812rem;
+  border-radius: 15px;
   font-size: 16px;
   height: 28px;
   width: 120px;
@@ -32,12 +30,13 @@
   background-color: $yellow;
   color: $color-font-white;
   outline: none;
-  background-color: $yellow;;
+  background-color: $yellow;
+  cursor: pointer;
 }
 
 .grid__load-more {
   display: none;
-  
+
   &.visible {
     color: $color-font-white;
     outline: none;
@@ -50,50 +49,57 @@
   }
 }
 
-  //===================<<MEDIA 768>>=========================
+//===================<<MEDIA 768>>=========================
 
-  @media(min-width: 768px) and (max-width: 1199px){
-	.form{
+@media(min-width: 768px) and (max-width: 1199px) {
+  .form {
     width: 760px;
     margin: 0;
   }
-  }
+}
 
 //===================<<MEDIA 1200>>=========================
-@media(min-width: 1200px){
-  .main{
-    
-  }
-    picture{
-      display: flex;
-      justify-content: center;
-      padding-bottom: 40px;
-    }
-    .form{
-      height: 30px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 60px;
-    }
-    .form__input{
-      width: 350px;
-      margin-left: 10px;
-      padding: 10px 85px;
-    }
-    .form__btn{
-      font-size: 14px;
-      height: 1.625rem;
-      margin-top: 24px;
-      margin-left: 10px;
-    }
-    .grid__load-more {
-      margin-top: 100px;
-    }
+@media(min-width: 1200px) {
 
-  
+  picture {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+  }
+
+  .form {
+    height: 30px;
+    width: 750px;
+    margin-left: 215px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+
+  .form__input {
+    width: 560px;
+
+  }
+
+  .form__btn {
+    width: 80px;
+    height: 31px;
+    font-size: 14px;
+    margin-top: 31px;
+    margin-right: 40px;
+    ;
+
+
+  }
+
+  .grid__load-more {
+    margin-top: 100px;
+  }
+
+
 }
+
 /*.main{
   margin-top: 50px;
   picture{
