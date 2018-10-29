@@ -238,3 +238,4 @@ export default class Controller {
         this.changeColorFavorite(nextImg)
     }
 }
+// левое изменение. удали!!
