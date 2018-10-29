@@ -8,11 +8,13 @@
   position: relative;
 }
 .logo {
+  
   display: block;
   width: 300px;
   height: auto;
   margin: 0 auto;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .button{
 	margin: auto;
@@ -21,6 +23,11 @@
 .button:hover{
   cursor: pointer;
   
+}
+.btn-close{
+margin-top: 5px;
+
+
 }
   li{
     list-style-type: none;
