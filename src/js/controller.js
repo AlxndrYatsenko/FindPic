@@ -4,6 +4,7 @@ import { imagesOnThePage } from './services/modal';
 
 export default class Controller {
 
+
 	constructor(model, view) {
 		this._model = model;
 		this._view = view;
@@ -203,4 +204,5 @@ export default class Controller {
 				this._view.refs.modalImg.id = nextImg.id
 				this.changeColorFavorite(nextImg)
 	}
+
 }

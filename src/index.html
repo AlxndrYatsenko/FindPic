@@ -11,14 +11,15 @@
 
 <body class="page">
 
-<div class="wrapper">
-	<header class="header">
-		<!--favorites-->
-		<div class="favorites">
-			<a class="favorites__link" href="#">Избранные</a>
-		</div>
-	</header>
-	<main class="main">
+    <div class="wrapper">
+        <header class="header">
+            <!--favorites-->
+            <div class="favorites">
+                <a class="favorites__link" href="#">Избранные</a>
+            </div>
+        </header>
+        <main class="main">
+
 
 
         <!--logo-->
@@ -31,7 +32,9 @@
             
         </picture>
 
-        <!-- SEARCH FORM -->
+
+            <!-- SEARCH FORM -->
+
 
         <form class="form">
             <input class="form__input input-js" type="text" placeholder="Введите название картинки" autofocus>
@@ -40,9 +43,11 @@
         </form>
 
 
-        <!-- IMAGE GRID -->
+
+            <!-- IMAGE GRID -->
             <ul class="grid"></ul>
             <button class="grid__load-more button">Показать еще</button>
+
 
         <!--modal-->
         <div class="backdrop">
@@ -54,23 +59,23 @@
                         <button class="button" data-action="next">&#62;</button>
                         <button class="button" data-action="favorite" >&#9733;</button>
                         <button class="button btn-close" data-action="close-modal" >&times;</button>
+
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- LOADER -->
+            <!-- LOADER -->
 
-        <div class="loader-overlay">
-            <div class="loader">
-                <svg class="circular" viewbox="25 25 50 50">
+            <div class="loader-overlay">
+                <div class="loader">
+                    <svg class="circular" viewbox="25 25 50 50">
                     <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /></svg>
+                </div>
             </div>
-        </div>
 
 
-    </main>
-</div>
+        </main>
+    </div>
 </body>
 
 </html>
