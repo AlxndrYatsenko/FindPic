@@ -4,238 +4,205 @@ import { imagesOnThePage } from './services/modal';
 
 export default class Controller {
 
-    constructor(model, view) {
-        this._model = model;
-        this._view = view;
-        this.images = this._model.localImages;
-        this.imagesOnPage = imagesOnThePage;
 
-        this._view.refs.body.addEventListener('click',
-            this.handleModalFalseClick.bind(this));
+	constructor(model, view) {
+		this._model = model;
+		this._view = view;
+		this.images = this._model.localImages;
+		this.imagesOnPage = imagesOnThePage;
 
-        this._view.refs.form.addEventListener('submit',
-            this.handleFormSumit.bind(this));
+		this._view.refs.form.addEventListener('submit',
+			this.handleFormSumit.bind(this));
 
-        this._view.refs.loadMoreBtn.addEventListener('click',
-            this.handleLoadMoreClick.bind(this));
+		this._view.refs.loadMoreBtn.addEventListener('click',
+			this.handleLoadMoreClick.bind(this));
 
-        this._view.refs.grid.addEventListener('click',
-            this.handleOpenModal.bind(this));
+		this._view.refs.grid.addEventListener('click',
+			this.handleOpenModal.bind(this));
 
-        this._view.refs.modalPage.addEventListener('click',
-            this.handleModalControls.bind(this));
+		this._view.refs.modalPage.addEventListener('click',
+			this.handleModalControls.bind(this));
 
-        this._view.refs.modalPage.addEventListener('click',
-            this.handleFavoritesModalControls.bind(this));
+		this._view.refs.showFavorite.addEventListener('click',
+			this.handleShowFavorite.bind(this));
 
-        this._view.refs.showFavorite.addEventListener('click',
-            this.handleShowFavorite.bind(this));
+		this.init();
+	}
 
-        this.init();
-    }
+	init() {
+		this._model.addToLocalStorage(this.images)
+	}
 
-    init() {
-        this._model.addToLocalStorage(this.images)
-    }
+	// SUBMIT
 
-    // SUBMIT
+	handleFormSumit(e) {
+		e.preventDefault();
+		this.imagesOnPage = []
 
-    handleFormSumit(e) {
-        e.preventDefault();
-        this.imagesOnPage = []
+		this._model.resetCurrentPage();
+		this._view.resetPhotosGrid();
+		this._model.currentQuery = this._view.refs.input.value;
+		this.handleFetch({
+			query: this._model.currentQuery,
+			page: this._model.currentPage,
+		});
 
-        this._model.resetCurrentPage();
-        this._view.resetPhotosGrid();
-        this._model.currentQuery = this._view.refs.input.value;
-        this.handleFetch({
-            query: this._model.currentQuery,
-            page: this._model.currentPage,
-        });
+		this._view.refs.form.reset();
+		this._view.showLoadMoreBtn();
+	}
 
-        this._view.refs.form.reset();
-        this._view.showLoadMoreBtn();
-        this._view.refs.grid.classList.remove('js-favorites');
-    }
+	handleFetch(params) {
+		this._view.toggleLoader();
 
-    handleFetch(params) {
-        this._view.toggleLoader();
+		getImages(params).then(photos => {
+			const markup = this._view.createGridItems(photos);
+			this._view.updatePhotosGrid(markup);
+			this._view.toggleLoader();
+		});
+	}
 
-        getImages(params).then(photos => {
-            const markup = this._view.createGridItems(photos);
-            this._view.updatePhotosGrid(markup);
-            this._view.toggleLoader();
-        });
-    }
+	//LOAD MORE
 
-    //LOAD MORE
+	handleLoadMoreClick() {
+		this._model.incrementCurrentPage();
+		this.handleFetch({
+			query: this._model.currentQuery,
+			page: this._model.currentPage,
+		});
+	}
 
-    handleLoadMoreClick() {
-        this._model.incrementCurrentPage();
-        this.handleFetch({
-            query: this._model.currentQuery,
-            page: this._model.currentPage,
-        });
-    }
+	//MODAL
 
-    //MODAL
+	handleOpenModal(evt) {
+		// console.log(evt.target.nodeName)
+		if(evt.target.nodeName === "IMG"){
+		this._model.backdropImageInit(evt.target)
+		this.changeColorFavorite(evt.target)
+		this._view.changeDisplayElem(this._view.refs.backdrop, "flex")
+		this._view.refs.modalPage.addEventListener('click', this.handleModalClick.bind(this))
 
-    handleOpenModal(evt) {
-        if (!evt.target.src) return;
+		window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
+	}
+	}
 
-        this._model.backdropImageInit(evt.target)
-        this.changeColorFavorite(evt.target)
-        this._view.refs.backdrop.classList.add("show-modal")
-        this._view.refs.modalPage.addEventListener('click', this.handleModalClick.bind(this))
+	handleModalClick(evt){
+		if(evt.target.nodeName !== 'IMG'
+		&& evt.target.nodeName !== 'BUTTON'
+		&& evt.target !== this._view.refs.modalIcons){
+			this.handleCloseModal()
+		}
+	}
 
-        window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
-    }
+	handleModalKeyPress(evt) {
+		const key = evt.code;
+		switch (key) {
+			case 'Escape':
+				this.handleCloseModal();
+				break;
 
+			case 'ArrowLeft':
+			this.keyPrev()
+				break;
 
-    handleModalFalseClick(evt) {
-        if (!this._view.refs.backdrop.classList.contains('show-modal')) return;
+			case 'ArrowRight':
+			this.keyNext()
+				break;
+		}
+	}
 
-        const target = evt.target;
-        if (target.parentNode.classList.contains("main")) {
-            this.handleCloseModal();
-        }
+	handleCloseModal() {
+		this._view.refs.backdrop.classList.remove('show-modal');
+		this._view.changeDisplayElem(this._view.refs.backdrop, "none")
+		window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
+	}
 
-    }
-    handleModalClick(evt) {
-        if (evt.target.nodeName !== 'IMG' &&
-            evt.target.nodeName !== 'BUTTON' &&
-            evt.target !== this._view.refs.modalIcons) {
-            this.handleCloseModal()
-        }
-    }
+	//FAVORITE
 
-    handleModalKeyPress(evt) {
-        const key = evt.code;
-        switch (key) {
-            case 'Escape':
-                this.handleCloseModal();
-                break;
+	handleShowFavorite() {
+		if (this.images.length === 0) {
+			alert('Вы ничего не добавили в избранное')
+		}
+		this._view.refs.loadMoreBtn.classList.remove('visible')
+		this._view.refs.grid.textContent = '';
+		const markup = this._view.createGridItems(this.images);
+		this._view.updatePhotosGrid(markup);
+	}
 
-            case 'ArrowLeft':
-                this.keyPrev()
-                break;
+	//CONTROLL
+	
+	handleModalControls() {
 
-            case 'ArrowRight':
-                this.keyNext()
-                break;
-        }
-    }
+		const target = event.target;
 
-    handleCloseModal() {
-        if (!this._view.refs.backdrop.classList.contains('show-modal')) return;
-        this._view.refs.backdrop.classList.remove('show-modal');
-        window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
-    }
+		if (target.nodeName !== "BUTTON") return;
 
-    //FAVORITE
+		const action = target.dataset.action;
 
-    handleShowFavorite() {
-        if (this.images.length === 0) {
-            alert('Вы ничего не добавили в избранное')
-        }
-        this._view.refs.grid.classList.add('js-favorites');
-        this._view.refs.favoriteModalBtn.classList.add('js-favorites__icon');
-        this._view.refs.loadMoreBtn.classList.remove('visible');
-        this._view.refs.grid.textContent = '';
-        const markup = this._view.createGridItems(this.images);
-        this._view.updatePhotosGrid(markup);
-    }
-    handleFavoritesModalControls() {
-        if (!this._view.refs.grid.classList.contains('js-favorites')) return;
+		switch (action) {
+			case 'next':
+			this.keyNext()
+				break;
 
-        const target = event.target;
+			case 'prev':
+			this.keyPrev()
+				break;
 
-        if (target.nodeName !== "BUTTON") return;
-        const action = target.dataset.action;
+			case 'favorite':
+			const imgUrl = this._view.refs.modalImg.getAttribute("src")
+			const imgId = this._view.refs.modalImg.getAttribute("id")
 
-        switch (action) {
+			if (this._model.isHasId(imgId, this.images)) {
+				this.images = this.images.filter(obj => obj.id !== imgId)
+				this._model.addToLocalStorage(this.images)
 
-            case 'favorite':
-                this.handleShowFavorite();
-                this.handleCloseModal();
+				this._view.changeColorFavoriteBtn("#ffffff")
+				return
+			}
 
-        }
+			this._view.changeColorFavoriteBtn("#eeed11")
+			
+			const obj = {
+				id: imgId,
+				webformatURL: imgUrl,
+			}
 
-    }
+			this.images.push(obj)
+			this._model.addToLocalStorage(this.images)
+				break;
 
-    //CONTROLL
+			case 'close-modal':
+				this._view.refs.backdrop.classList.remove('show-modal');
+				this._view.refs.backdrop.style.display = "none"
+				window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
+				this._model.backdropCloseModal();
+				break;
+		}
+	}
 
-    handleModalControls() {
+	changeColorFavorite(elem) {
+		const imgUrl = elem.getAttribute("src")
+		this._view.refs.modalImg.setAttribute("src", imgUrl)
 
-        const target = event.target;
+		const imgId = elem.getAttribute("id")
+		this._view.refs.modalImg.setAttribute("id", imgId)
 
-        if (target.nodeName !== "BUTTON") return;
+		this._model.isHasId(imgId, this.images) ?
+			this._view.changeColorFavoriteBtn("#eeed11") :
+			this._view.changeColorFavoriteBtn("#ffffff")
+	}
 
-        const action = target.dataset.action;
+	keyPrev(){
+		const prevImg = this._model.backdropShowPrevImage();
+		this._view.refs.modalImg.src = prevImg.src
+		this._view.refs.modalImg.id = prevImg.id
+		this.changeColorFavorite(prevImg)
+	}
 
-        switch (action) {
-            case 'next':
-                this.keyNext()
-                break;
+	keyNext(){
+		const nextImg = this._model.backdropShowNextImage()
+				this._view.refs.modalImg.src = nextImg.src
+				this._view.refs.modalImg.id = nextImg.id
+				this.changeColorFavorite(nextImg)
+	}
 
-            case 'prev':
-                this.keyPrev()
-                break;
-
-            case 'favorite':
-                const imgUrl = this._view.refs.modalImg.getAttribute("src")
-                const imgId = this._view.refs.modalImg.getAttribute("id")
-
-                if (this._model.isHasId(imgId, this.images)) {
-                    this.images = this.images.filter(obj => obj.id !== imgId)
-                    this._model.addToLocalStorage(this.images)
-
-                    this._view.changeColorFavoriteBtn("#ffffff")
-                    return
-                }
-
-                this._view.changeColorFavoriteBtn("#eeed11")
-
-                const obj = {
-                    id: imgId,
-                    webformatURL: imgUrl,
-                }
-
-                this.images.push(obj)
-                this._model.addToLocalStorage(this.images)
-                break;
-
-            case 'close-modal':
-                this._view.refs.backdrop.classList.remove('show-modal');
-                window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
-                this._model.backdropCloseModal();
-                break;
-        }
-    }
-
-
-    changeColorFavorite(elem) {
-        const imgUrl = elem.getAttribute("src")
-        this._view.refs.modalImg.setAttribute("src", imgUrl)
-
-        const imgId = elem.getAttribute("id")
-        this._view.refs.modalImg.setAttribute("id", imgId)
-
-        this._model.isHasId(imgId, this.images) ?
-            this._view.changeColorFavoriteBtn("#eeed11") :
-            this._view.changeColorFavoriteBtn("#ffffff")
-    }
-
-    keyPrev() {
-        const prevImg = this._model.backdropShowPrevImage();
-        this._view.refs.modalImg.src = prevImg.src
-        this._view.refs.modalImg.id = prevImg.id
-        this.changeColorFavorite(prevImg)
-    }
-
-    keyNext() {
-        const nextImg = this._model.backdropShowNextImage()
-        this._view.refs.modalImg.src = nextImg.src
-        this._view.refs.modalImg.id = nextImg.id
-        this.changeColorFavorite(nextImg)
-    }
 }
