@@ -73,13 +73,15 @@ export default class Controller {
 	//MODAL
 
 	handleOpenModal(evt) {
-		
+		// console.log(evt.target.nodeName)
+		if(evt.target.nodeName === "IMG"){
 		this._model.backdropImageInit(evt.target)
 		this.changeColorFavorite(evt.target)
 		this._view.changeDisplayElem(this._view.refs.backdrop, "flex")
 		this._view.refs.modalPage.addEventListener('click', this.handleModalClick.bind(this))
 
 		window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
+	}
 	}
 
 	handleModalClick(evt){
