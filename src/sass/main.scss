@@ -1,159 +1,94 @@
+.page {
+	margin: 0 auto;
+	padding: 8px;
+}
+
+.site-logo {
+	display: block;
+	margin: 0 auto;
+	width: 302px;
+	cursor: pointer;
+}
+
 .form {
-  width: 320px;
-  padding: 0 10px;
+	display: block;
+	margin: 0 auto;
+	padding-bottom: 20px;
 
-  display: block;
+	&__input {
+		display: block;
+		margin: 0 auto;
+		width: 300px;
+		padding: 8px 16px 6;
+		padding: 8px 14px 6px;
+		color: #949597;
+		border-radius: 0.812rem;
+		border: 1px solid $border-color;
+		border-bottom: 2px solid $border-color;
+		outline: none;
+	}
 
+	&__btn {
+		display: block;
+		margin: 20px auto 0;
+		border-radius: 0.812rem;
+		font-size: 14px;
+		padding: 5px 16px 4px 20px;
+		font-family: Comfortaa, Roboto, sans-serif;
+		background-color: $yellow;
+		color: $color-font-white;
+		outline: none;
+		background-color: $yellow;
+		border: none;
+	}
 }
 
-.form__input {
-  width: 300px;
-  height: 33px;
-  padding: 0 10px;
-  border-radius: 15px;
-  border: 2px solid $border-color;
-  outline: none;
+.list__load-more {
+	display: none;
+	margin: 0;
+	padding: 0;
 
-  display: block;
-  margin: 70px auto 40px;
-}
-
-.form__btn {
-  display: block;
-  margin: 0 auto;
-  border-radius: 15px;
-  font-size: 16px;
-  height: 28px;
-  width: 120px;
-  font-family: Comfortaa, Roboto, sans-serif;
-  line-height: 1.5;
-  background-color: $yellow;
-  color: $color-font-white;
-  outline: none;
-  background-color: $yellow;
-  cursor: pointer;
-}
-
-.grid__load-more {
-  display: none;
-
-  &.visible {
-    color: $color-font-white;
-    outline: none;
-    background-color: $yellow;
-    border-radius: 1.2em;
-    height: 2.2em;
-    margin: 0 auto;
-    display: block;
-    text-transform: uppercase;
-  }
-}
-
-//===================<<MEDIA 768>>=========================
-
-@media(min-width: 768px) and (max-width: 1199px) {
-  .form {
-    width: 760px;
-    margin: 0;
-  }
+	&.visible {
+		display: block;
+		margin: 0 auto;
+		color: $color-font-white;
+		background-color: $yellow;
+		border-radius: 0.812rem;
+		font-size: 14px;
+		padding: 8px 14px 6px;
+		font-family: Comfortaa, Roboto, sans-serif;
+		color: $color-font-white;
+		outline: none;
+		border: none;
+	}
 }
 
 //===================<<MEDIA 1200>>=========================
 @media(min-width: 1200px) {
+	.page {
+		margin: 0 auto;
+		padding-top: 30px;
+	}
 
-  picture {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 40px;
-  }
-
-  .form {
-    height: 30px;
-    width: 750px;
-    margin-left: 215px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 60px;
-  }
-
-  .form__input {
-    width: 560px;
-
-  }
-
-  .form__btn {
-    width: 80px;
-    height: 31px;
-    font-size: 14px;
-    margin-top: 31px;
-    margin-right: 40px;
-    ;
-
-
-  }
-
-  .grid__load-more {
-    margin-top: 100px;
-  }
-
-
-}
-
-/*.main{
-  margin-top: 50px;
-  picture{
-    display: flex;
-    justify-content: center;
-    padding-bottom: 40px;
-  }
-  .form{
-    display: flex;
+	.form {
+		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 20px;
-		
-    &__input{
-      width: 350px;
-      margin-right: .875rem;
-      padding: 0.5em 1.5em;
-      border-radius: 0.812rem;
-      border: 2px solid $border-color;
-      outline: none;
-		}
-		
-    &__btn{
-      border-radius: 0.812rem;
-      font-size: 14px;
-      height: 1.625rem;
-      font-family: Comfortaa, Roboto, sans-serif;
-      line-height: 1.5;
-      background-color: $yellow;
-      color: $color-font-white;
-			outline: none;
 
-			&:hover{
-				cursor: pointer
-			};
-    }
-  }
-  .grid__load-more {
-		display: none;
-		
-    &.visible {
-      color: $color-font-white;
-      outline: none;
-      background-color: $yellow;
-      border-radius: 1.2em;
-      height: 2.2em;
-      margin: 0 auto;
-      display: block;
-      text-transform: uppercase;
+		&__input {
+			margin: 0;
+			width: 450px;
+			font-size: 10px;
+			margin-right: 16px;
 		}
-		
-		&:hover{
-			cursor: pointer
-		};
-  }
+
+		&__btn {
+			margin: 0;
+			font-size: 14px;
+		}
+	}
+
+	.list__load-more {
+		margin-top: 100px;
+	}
 }
-*/

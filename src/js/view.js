@@ -1,4 +1,4 @@
-import gridItemTpl from '../templates/gallery-template.hbs';
+import listItemTpl from '../templates/gallery-template.hbs';
 
 export default class View {
 
@@ -6,11 +6,12 @@ export default class View {
         this.refs = {};
 
         this.refs.body = document.querySelector('.page');
-        this.refs.grid = document.querySelector('.grid');
+        this.refs.siteLogo = document.querySelector('.site-logo');
+        this.refs.list = document.querySelector('.list');
         this.refs.form = document.querySelector('.form');
         this.refs.input = document.querySelector('.input-js');
         this.refs.loader = document.querySelector('.loader-overlay');
-        this.refs.loadMoreBtn = document.querySelector('.grid__load-more');
+        this.refs.loadMoreBtn = document.querySelector('.list__load-more');
         this.refs.backdrop = document.querySelector('.backdrop');
         this.refs.modalPage = document.querySelector('.page-modal');
         this.refs.modalImg = document.querySelector('.page-modal__img');
@@ -25,16 +26,16 @@ export default class View {
         }
     }
 
-    createGridItems(items) {
-        return items.reduce((markup, item) => markup + gridItemTpl(item), '');
+    createListItems(items) {
+        return items.reduce((markup, item) => markup + listItemTpl(item), '');
     }
 
-    updatePhotosGrid(markup) {
-        this.refs.grid.insertAdjacentHTML('beforeend', markup);
+    updatePhotosList(markup) {
+        this.refs.list.insertAdjacentHTML('beforeend', markup);
     }
 
-    resetPhotosGrid() {
-        this.refs.grid.innerHTML = '';
+    resetPhotosList() {
+        this.refs.list.innerHTML = '';
     }
 
     toggleLoader() {
