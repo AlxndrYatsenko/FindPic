@@ -1,52 +1,30 @@
-*, *::before, *::after{
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
+
 .wrapper {
-  margin: 0 auto;
-  width: 320px;
-  padding: 10px 0;
-  position: relative;
+    margin: 0 auto;
+    max-width: 767px;
 }
-.logo {
-  
-  display: block;
-  width: 300px;
-  height: auto;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-.button{
-	margin: auto;
-	outline: none;
-}
-.button:hover{
-  cursor: pointer;
-  
-}
-.btn-close{
-margin-top: 5px;
 
-
+.button {
+    margin: auto;
+    outline: none;
 }
-  li{
+
+.button:hover {
+    cursor: pointer;
+}
+
+li {
     list-style-type: none;
-  }
-
-//===================<<MEDIA 768>>=========================
-
-  @media(min-width: 768px) and (max-width: 1199px) {
-	.wrapper{
-    width: 760px;
-  }
-  }
+}
 
 //===================<<MEDIA 1200>>=========================
-@media(min-width: 1200px){
-  .wrapper{
-    width: 1200px;
-  position: relative;
-  
-  }
- 
+@media(min-width: 1200px) {
+    .wrapper {
+        max-width: 1200px;
+    }
 }

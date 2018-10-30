@@ -6,6 +6,7 @@ export default class View {
         this.refs = {};
 
         this.refs.body = document.querySelector('.page');
+        this.refs.siteLogo = document.querySelector('.site-logo');
         this.refs.grid = document.querySelector('.grid');
         this.refs.form = document.querySelector('.form');
         this.refs.input = document.querySelector('.input-js');

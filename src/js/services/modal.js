@@ -1,19 +1,27 @@
-export const imagesOnThePage = []
+export const imagesOnThePage = [];
+
 const backdrop = {
     currentImage: document.querySelector('.page-modal img'),
     nextImage: "",
     prevImage: "",
     currentImgIndex: 0,
 
+
     getNextImage() {
-        if (backdrop.currentImgIndex === imagesOnThePage.length - 1) return;
+        if (!imagesOnThePage[backdrop.currentImgIndex + 1].src ||
+            backdrop.currentImgIndex === imagesOnThePage.length - 1) return;
         backdrop.currentImgIndex += 1;
         return backdrop.nextImage = imagesOnThePage[backdrop.currentImgIndex];
     },
+
     getPrevImage() {
-        if (backdrop.currentImgIndex === 0) return;
+        if (!imagesOnThePage[backdrop.currentImgIndex - 1].src ||
+            backdrop.currentImgIndex === 0) return;
+
+        console.log(imagesOnThePage.indexOf(backdrop.currentImage));
         backdrop.currentImgIndex -= 1;
         return backdrop.prevImage = imagesOnThePage[backdrop.currentImgIndex];
+
     }
 }
 
@@ -21,11 +29,7 @@ export const showCurrentImage = (target) => {
     imagesOnThePage.length = 0;
     const allImg = document.querySelectorAll('.grid__item img')
     allImg.forEach(img => { imagesOnThePage.push(img) });
-
     backdrop.currentImgIndex = imagesOnThePage.indexOf(target);
-    backdrop.getPrevImage();
-    backdrop.getNextImage();
-
     return backdrop.currentImage;
 
 }
