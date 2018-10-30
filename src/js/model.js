@@ -5,7 +5,7 @@ export default class Model {
     constructor() {
         this.currentQuery = '';
         this.currentPage = 1;
-        this.localImages = JSON.parse(localStorage.getItem('images'));
+        this.localImages = JSON.parse(localStorage.getItem('favorites'));
 
         if (this.localImages === null || this.localImages.length === 0) {
             this.localImages = []
@@ -22,7 +22,7 @@ export default class Model {
 
     addToLocalStorage(arr) {
         const jsonObj = JSON.stringify(arr);
-        localStorage.setItem(`images`, jsonObj);
+        localStorage.setItem(`favorites`, jsonObj);
     }
 
     isHasId(id, arr) {
@@ -54,7 +54,7 @@ export default class Model {
 
     preventDefaultForScrollKeys(e) {
         if (keys[e.keyCode]) {
-            preventDefault(e);
+            e.preventDefault();
             return false;
         }
     }

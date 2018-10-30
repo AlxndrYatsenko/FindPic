@@ -11,7 +11,8 @@ export default class Controller {
         this.imagesOnPage = imagesOnThePage;
 
         this._view.refs.body.addEventListener('click',
-            this.handleModalFalseClick.bind(this));
+						this.handleModalFalseClick.bind(this));
+						
         this._view.refs.siteLogo.addEventListener('click',
             this.handleLogoClick.bind(this));
 
@@ -21,7 +22,7 @@ export default class Controller {
         this._view.refs.loadMoreBtn.addEventListener('click',
             this.handleLoadMoreClick.bind(this));
 
-        this._view.refs.grid.addEventListener('click',
+        this._view.refs.list.addEventListener('click',
             this.handleOpenModal.bind(this));
 
         this._view.refs.modalPage.addEventListener('click',
@@ -51,7 +52,7 @@ export default class Controller {
         this.imagesOnPage = []
 
         this._model.resetCurrentPage();
-        this._view.resetPhotosGrid();
+        this._view.resetPhotosList();
         this._model.currentQuery = this._view.refs.input.value;
         this.handleFetch({
             query: this._model.currentQuery,
@@ -60,15 +61,15 @@ export default class Controller {
 
         // this._view.refs.form.reset();
         this._view.showLoadMoreBtn();
-        this._view.refs.grid.classList.remove('js-favorites');
+        this._view.refs.list.classList.remove('js-favorites');
     }
 
     handleFetch(params) {
         this._view.toggleLoader();
 
         getImages(params).then(photos => {
-            const markup = this._view.createGridItems(photos);
-            this._view.updatePhotosGrid(markup);
+            const markup = this._view.createListItems(photos);
+            this._view.updatePhotosList(markup);
             this._view.toggleLoader();
         });
     }
@@ -94,7 +95,6 @@ export default class Controller {
         this._model.backdropImageInit(evt.target)
         this.changeColorFavorite(evt.target)
         this._view.refs.backdrop.classList.add("show-modal")
-            // this._view.refs.modalPage.addEventListener('click', this.handleModalClick.bind(this))
 
         window.addEventListener('keydown', this.handleModalKeyPress.bind(this));
     }
@@ -108,15 +108,8 @@ export default class Controller {
             }
 
         }
-        // handleModalClick(evt) {
-        //     if (evt.target.nodeName !== 'IMG' &&
-        //         evt.target.nodeName !== 'BUTTON' &&
-        //         evt.target !== this._view.refs.modalIcons) {
-        //         this.handleCloseModal()
-        //     }
-        // }
 
-    handleModalKeyPress(evt) {
+				handleModalKeyPress(evt) {
         const key = evt.code;
         switch (key) {
             case 'Escape':
@@ -150,18 +143,17 @@ export default class Controller {
                 alert('Вы ничего не добавили в избранное')
             }
         }
-        this._view.refs.grid.classList.add('js-favorites');
+        this._view.refs.list.classList.add('js-favorites');
         this._view.refs.favoriteModalBtn.classList.add('js-favorites__icon');
         this._view.refs.loadMoreBtn.classList.remove('visible');
-        this._view.refs.grid.textContent = '';
-        const markup = this._view.createGridItems(this.images);
-        this._view.updatePhotosGrid(markup);
+        this._view.refs.list.textContent = '';
+        const markup = this._view.createListItems(this.images);
+        this._view.updatePhotosList(markup);
     }
     handleFavoritesModalControls(event) {
-        if (!this._view.refs.grid.classList.contains('js-favorites')) return;
+        if (!this._view.refs.list.classList.contains('js-favorites')) return;
 
         const target = event.target;
-        console.log(target)
 
         if (target.nodeName !== "BUTTON") return;
         const action = target.dataset.action;
@@ -220,9 +212,6 @@ export default class Controller {
 
             case 'close-modal':
                 this.handleCloseModal()
-                    // this._view.refs.backdrop.classList.remove('show-modal');
-                    // window.removeEventListener('keydown', this.handleModalKeyPress.bind(this));
-                    // this._model.backdropCloseModal();
                 break;
         }
     }
@@ -240,17 +229,17 @@ export default class Controller {
     }
 
     keyPrev() {
-        // if (!this._model.backdropShowPrevImage().src) return;
-        const prevImg = this._model.backdropShowPrevImage();
+				const prevImg = this._model.backdropShowPrevImage();
+				if(prevImg === '') return
         this._view.refs.modalImg.src = prevImg.src
         this._view.refs.modalImg.id = prevImg.id
         this.changeColorFavorite(prevImg)
     }
 
     keyNext() {
-        // if (!this._model.backdropShowNextImage().src) return;
         const nextImg = this._model.backdropShowNextImage()
-        this._view.refs.modalImg.src = nextImg.src
+				if(nextImg === '') return
+				this._view.refs.modalImg.src = nextImg.src
         this._view.refs.modalImg.id = nextImg.id
         this.changeColorFavorite(nextImg)
     }
